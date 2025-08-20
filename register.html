@@ -134,6 +134,10 @@
                 <label for="password">كلمة المرور</label>
                 <input type="password" id="password" name="password" required>
             </div>
+            <div class="input-group">
+                <label for="confirm-password">تأكيد كلمة المرور</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+            </div>
             <button type="submit" class="btn-register">إنشاء الحساب</button>
             <div id="message"></div>
         </form>
@@ -148,13 +152,21 @@
 
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
             const messageElement = document.getElementById('message');
 
             messageElement.textContent = '';
             messageElement.className = '';
 
-            if (username === '' || password === '') {
+            if (username === '' || password === '' || confirmPassword === '') {
                 messageElement.textContent = 'الرجاء ملء جميع الحقول.';
+                messageElement.classList.add('error');
+                return;
+            }
+            
+            // التحقق من تطابق كلمتي المرور
+            if (password !== confirmPassword) {
+                messageElement.textContent = 'كلمة المرور وتأكيدها غير متطابقين.';
                 messageElement.classList.add('error');
                 return;
             }
