@@ -138,12 +138,10 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            // هنا تقوم بالتحقق من البيانات المخزنة
-            // بما أنك تستخدم localStorage، سنستخدمه للتحقق
-            const storedUsername = localStorage.getItem('username');
-            const storedPassword = localStorage.getItem('password');
+            // الحصول على بيانات المستخدم من المخزن المحلي (localStorage)
+            const storedUser = JSON.parse(localStorage.getItem('user'));
 
-            if (username === storedUsername && password === storedPassword) {
+            if (storedUser && storedUser.username === username && storedUser.password === password) {
                 // تسجيل الدخول ناجح
                 localStorage.setItem('loggedInUser', username);
                 alert('تم تسجيل الدخول بنجاح!');
