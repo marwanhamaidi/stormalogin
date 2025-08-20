@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول - StormaX</title>
+    <title>إنشاء حساب جديد - StormaX</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            direction: rtl; /* اتجاه الصفحة من اليمين إلى اليسار */
+            direction: rtl;
         }
         .login-container {
             background-color: rgba(255, 255, 255, 0.95);
@@ -75,7 +75,7 @@
             outline: none;
             box-shadow: 0 0 5px rgba(15, 76, 117, 0.5);
         }
-        .btn-login {
+        .btn-register {
             width: 100%;
             padding: 15px;
             border: none;
@@ -87,7 +87,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-        .btn-login:hover {
+        .btn-register:hover {
             background-color: #0c3b5d;
         }
         .links {
@@ -105,6 +105,17 @@
             color: #0f4c75;
             text-decoration: underline;
         }
+        #message {
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .error {
+            color: #e74c3c;
+        }
+        .success {
+            color: #2ecc71;
+        }
     </style>
 </head>
 <body>
@@ -113,33 +124,69 @@
         <div class="logo-box">
             <img src="logo.png" alt="StormaX Logo">
         </div>
-        <h2>تسجيل الدخول لـ StormaX Luncher</h2>
-        <form id="login-form">
+        <h2>إنشاء حساب جديد لـ StormaX Luncher</h2>
+        <form id="register-form">
             <div class="input-group">
-                <label for="username">اسم المستخدم أو البريد الإلكتروني</label>
+                <label for="username">اسم المستخدم</label>
                 <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="email">البريد الإلكتروني</label>
+                <input type="email" id="email" name="email" required>
             </div>
             <div class="input-group">
                 <label for="password">كلمة المرور</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn-login" id="login-button">تسجيل الدخول</button>
+            <div class="input-group">
+                <label for="confirm-password">تأكيد كلمة المرور</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+            </div>
+            <button type="submit" class="btn-register">إنشاء الحساب</button>
+            <div id="message"></div>
         </form>
         <div class="links">
             <a href="#">هل نسيت كلمة المرور؟</a>
-            <a href="#">إنشاء حساب جديد</a>
+            <a href="#">لدي حساب بالفعل</a>
         </div>
     </div>
 
     <script>
-        document.getElementById('login-form').addEventListener('submit', function(event) {
-            // منع إرسال النموذج بالطريقة الافتراضية
+        document.getElementById('register-form').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            // يمكنك إضافة كود التحقق من البيانات هنا قبل التوجيه
-            
-            // توجيه المستخدم إلى الرابط الجديد
-            window.location.href = 'https://marwanhamaidi.github.io/storma/storma.html#';
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const messageElement = document.getElementById('message');
+
+            messageElement.textContent = '';
+            messageElement.className = '';
+
+            if (username === '' || email === '' || password === '' || confirmPassword === '') {
+                messageElement.textContent = 'الرجاء ملء جميع الحقول.';
+                messageElement.classList.add('error');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                messageElement.textContent = 'كلمة المرور وتأكيدها غير متطابقين.';
+                messageElement.classList.add('error');
+                return;
+            }
+
+            // هنا يتم "محاكاة" عملية إنشاء حساب حقيقي
+            // يتم تخزين اسم المستخدم في الذاكرة المؤقتة للمتصفح
+            localStorage.setItem('loggedInUser', username);
+
+            messageElement.textContent = 'تم إنشاء الحساب بنجاح! جارٍ التوجيه...';
+            messageElement.classList.add('success');
+
+            // التوجيه بعد 2 ثانية
+            setTimeout(() => {
+                window.location.href = 'https://marwanhamaidi.github.io/storma/storma.html#';
+            }, 2000);
         });
     </script>
 
